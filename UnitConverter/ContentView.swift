@@ -37,7 +37,7 @@ struct ContentView: View {
         case .temperature:
             result = convertTemperature()
         case .length:
-            result = lengthConvert()
+            result = convertLength()
         case .time:
             result = convertTime()
         }
@@ -213,9 +213,67 @@ struct ContentView: View {
     }
 
     
-    private func lengthConvert() -> Double {
-        return 0.0
+    private func convertLength() -> Double {
+        var result = 0.0
+        switch unitFrom {
+        case "meter":
+            result = convertFromMeter()
+        case "mile":
+            result = convertFromMile()
+        case "foot":
+            result = convertFromFoot()
+        default:
+            break
+        }
+        
+        return result
     }
+    
+    private func convertFromMeter() -> Double {
+        var result = 0.0
+        switch unitTo {
+        case "meter":
+            result = currentValue
+        case "mile":
+            result = currentValue / 1609.34
+        case "foot":
+            result = currentValue / 0.3048
+        default:
+            break
+        }
+        return result
+    }
+    
+    private func convertFromMile() -> Double {
+        var result = 0.0
+        switch unitTo {
+        case "meter":
+            result = currentValue * 1609.34
+        case "mile":
+            result = currentValue
+        case "foot":
+            result = currentValue * 5280
+        default:
+            break
+        }
+        return result
+    }
+    
+    private func convertFromFoot() -> Double {
+        var result = 0.0
+        switch unitTo {
+        case "meter":
+            result = currentValue * 0.3048
+        case "mile":
+            result = currentValue / 5280
+        case "foot":
+            result = currentValue
+        default:
+            break
+        }
+        return result
+    }
+
 }
 
 
