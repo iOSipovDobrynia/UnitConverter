@@ -12,18 +12,6 @@ struct ContentView: View {
     enum Unit: String, CaseIterable {
         case temperature, length, time
     }
-//    
-//    enum TemperatureUnit: String, CaseIterable {
-//        case kelvin, celsius, fahrenheit
-//    }
-//    
-//    enum LengthUnit: String, CaseIterable {
-//        case meter, mile, foot
-//    }
-//    
-//    enum TimeUnit: String, CaseIterable {
-//        case second, minute, hour
-//    }
     
     @State private var unitType: Unit = .length
     
@@ -47,7 +35,7 @@ struct ContentView: View {
         var result = 0.0
         switch unitType {
         case .temperature:
-            result = temperatureConvert()
+            result = convertTemperature()
         case .length:
             result = lengthConvert()
         case .time:
@@ -55,20 +43,6 @@ struct ContentView: View {
         }
         
         return result
-    }
-    
-    private func temperatureConvert() -> Double {
-        
-        
-        return 0.0
-    }
-    
-    private func timeConvert() -> Double {
-        return 0.0
-    }
-    
-    private func lengthConvert() -> Double {
-        return 0.0
     }
     
     var body: some View {
@@ -114,6 +88,75 @@ struct ContentView: View {
             }
             .navigationTitle("Unit Converter")
         }
+    }
+    
+    private func convertTemperature() -> Double {
+        var result = 0.0
+        switch unitFrom {
+        case "kelvin":
+            result = convertFromKelvin()
+        case "celsius":
+            result = convertFromCelsius()
+        case "fahrenheit":
+            result = convertFromFahrenheit()
+        default:
+            break
+        }
+        
+        return result
+    }
+    
+    private func convertFromKelvin() -> Double {
+        var result = 0.0
+        switch unitTo {
+        case "kelvin":
+            result = currentValue
+        case "celsius":
+            result = currentValue - 273.15
+        case "fahrenheit":
+            result = (currentValue - 273.15) * 9/5 + 32
+        default:
+            break
+        }
+        return result
+    }
+    
+    private func convertFromCelsius() -> Double {
+        var result = 0.0
+        switch unitTo {
+        case "kelvin":
+            result = currentValue + 273.15
+        case "celsius":
+            result = currentValue
+        case "fahrenheit":
+            result = currentValue * 9/5 + 32
+        default:
+            break
+        }
+        return result
+    }
+    
+    private func convertFromFahrenheit() -> Double {
+        var result = 0.0
+        switch unitTo {
+        case "kelvin":
+            result = (currentValue - 32) * 5/9 + 273.15
+        case "celsius":
+            result = (currentValue - 32) * 5/9
+        case "fahrenheit":
+            result = currentValue
+        default:
+            break
+        }
+        return result
+    }
+    
+    private func timeConvert() -> Double {
+        return 0.0
+    }
+    
+    private func lengthConvert() -> Double {
+        return 0.0
     }
 }
 
