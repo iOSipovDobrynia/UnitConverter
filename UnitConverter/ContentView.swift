@@ -39,7 +39,7 @@ struct ContentView: View {
         case .length:
             result = lengthConvert()
         case .time:
-            result = timeConvert()
+            result = convertTime()
         }
         
         return result
@@ -151,9 +151,67 @@ struct ContentView: View {
         return result
     }
     
-    private func timeConvert() -> Double {
-        return 0.0
+    private func convertTime() -> Double {
+        var result = 0.0
+        switch unitFrom {
+        case "second":
+            result = convertFromSecond()
+        case "minute":
+            result = convertFromMinute()
+        case "hour":
+            result = convertFromHour()
+        default:
+            break
+        }
+        
+        return result
     }
+    
+    private func convertFromSecond() -> Double {
+        var result = 0.0
+        switch unitTo {
+        case "second":
+            result = currentValue
+        case "minute":
+            result = currentValue / 60
+        case "hour":
+            result = currentValue / 3600
+        default:
+            break
+        }
+        return result
+    }
+    
+    private func convertFromMinute() -> Double {
+        var result = 0.0
+        switch unitTo {
+        case "second":
+            result = currentValue * 60
+        case "minute":
+            result = currentValue
+        case "hour":
+            result = currentValue / 60
+        default:
+            break
+        }
+        return result
+    }
+    
+    private func convertFromHour() -> Double {
+        var result = 0.0
+        switch unitTo {
+        case "second":
+            result = currentValue * 3600
+        case "minute":
+            result = currentValue * 60
+        case "hour":
+            result = currentValue
+        default:
+            break
+        }
+        return result
+    }
+
     
     private func lengthConvert() -> Double {
         return 0.0
