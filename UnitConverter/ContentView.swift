@@ -8,16 +8,41 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    enum Unit: String, CaseIterable {
+        case temperature, length, time
+    }
+    
+    enum TemperatureUnit {
+        case kelvin, celsius, fahrenheit
+    }
+    
+    enum LengthUnit: String, CaseIterable {
+        case meter, mile, foot
+    }
+    
+    enum TimeUnit: String, CaseIterable {
+        case second, minut, hour
+    }
+    
+    @State private var unit: TimeUnit = .second
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        NavigationStack {
+            Form {
+                Section {
+                    Picker(selection: $unit, label: Text("Choose unit type")) {
+                        ForEach(Array(TimeUnit.allCases), id: \.self) {
+                            Text($0.rawValue)
+                        }
+                    }
+                }
+            }
+            .navigationTitle("Unit Converter")
         }
-        .padding()
     }
 }
+
 
 #Preview {
     ContentView()
